@@ -1,17 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SchedulesController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,5 +11,19 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get("/schedules", [SchedulesController::class, 'index'])->name("schedules.index");
+
+Route::post("/schedules", [SchedulesController::class, 'store']);
+
+Route::get("/schedules/create", [SchedulesController::class, 'create']);
+
+Route::get("/schedules/{schedule}", [SchedulesController::class, 'show'])->name("schedules.show");
+
+Route::get("/schedules/{schedule}/edit", [SchedulesController::class, 'edit']);
+
+Route::put("/schedules/{schedule}", [SchedulesController::class, 'update']);
+
+Route::delete("/schedules/{schedule}", [SchedulesController::class, 'destroy']);
 
 require __DIR__.'/auth.php';
